@@ -53,10 +53,22 @@ button{
     flex: 1;
 }
 
-#zero {
+#zero{
     border-bottom-left-radius:25px
 }
 
 #equal{
     border-bottom-right-radius: 25px;
+}
+
+#screen{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+}
+
+#results{
+    color : white;
+ 
+    font-size: 4rem;
 }
