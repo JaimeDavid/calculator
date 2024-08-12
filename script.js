@@ -43,13 +43,26 @@
       firstNumber += this.textContent;
       screen.textContent = firstNumber;
    } else{
-      secondNumber += this.textContent; 
+      secondNumber += this.textContent;       
+      screen.textContent = secondNumber;
    }
  }
 
+ // places operator data in the appropiate variable
+ function operatorData(){ 
+      operator = this.id;
+   }
+ 
+
  // DOM manipulation
- let numbers = document.querySelectorAll('.number')
+ let numbers = document.querySelectorAll('.number');
+ let operators = document.querySelectorAll('.operator');
  let screen = document.getElementById('results');
+ let equals = document.querySelector('#equal')
 
  numbers.forEach((number) =>
    number.addEventListener('click', numericalData));
+
+ operators.forEach((operatorElement) =>
+   operatorElement.addEventListener('click', operatorData));
+
