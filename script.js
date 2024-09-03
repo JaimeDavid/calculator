@@ -38,19 +38,19 @@
    }
  }
 //places numeric calculator data in the appropiate variable
- function numericalData(){
+ function numericalData(element){
    if ((operator === '')){
-      firstNumber += this.textContent;
+      firstNumber += element.textContent;
       screen.textContent = firstNumber;
    } else{
-      secondNumber += this.textContent;       
+      secondNumber += element.textContent;       
       screen.textContent = secondNumber;
    }
  }
 
  // places operator data in the appropiate variable
- function operatorData(){ 
-      operator = this.id;
+ function operatorData(element){ 
+      operator = element.id;
    }
  
 
@@ -61,8 +61,13 @@
  let equals = document.querySelector('#equal')
 
  numbers.forEach((number) =>
-   number.addEventListener('click', numericalData));
+   number.addEventListener('click', () => {
+      numericalData(number);
+   }));
 
  operators.forEach((operatorElement) =>
-   operatorElement.addEventListener('click', operatorData));
+   operatorElement.addEventListener('click', ()=>{
+      operatorData(operatorElement);
+   })
+);
 
