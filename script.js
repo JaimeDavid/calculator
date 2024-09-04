@@ -20,37 +20,54 @@
  let firstNumber = '';
  let secondNumber = '';
  let operator = '';
+ result = '';
 
  //operate function
  function operate(firstNumber, secondNumber, operator){
    switch (operator){
       case 'division':
-         return division(firstNumber, secondNumber);
+         result = division(firstNumber, secondNumber);
+         break;
       
       case 'multiplication':
-         return multiply(firstNumber, secondNumber);
+         result = multiply(firstNumber, secondNumber);
+         break;
 
       case 'subtraction':
-         return subtract(firstNumber, secondNumber);
+         result = subtract(firstNumber, secondNumber);
+         break;
 
       case 'addition':
-         return add(firstNumber, secondNumber);      
+         result = add(firstNumber, secondNumber);
+         break;      
    }
  }
-//places numeric calculator data in the appropiate variable
- function numericalData(element){
-   if ((operator === '')){
-      firstNumber += element.textContent;
+
+ //updates screen
+ function updateScreen(){
+   if (result !== '' && operator !== '' ){
+      screen.textContent = result.toString();
+   } else if (operator === ''){
       screen.textContent = firstNumber;
-   } else{
-      secondNumber += element.textContent;       
+   }else {
       screen.textContent = secondNumber;
+   }
+
+ }
+//places numeric calculator data in the appropiate variable
+ function numericalData(numericalElement){
+   if ((operator === '')){
+      firstNumber += numericalElement.textContent;
+      
+   } else{
+      secondNumber += numericalElement.textContent;       
+      
    }
  }
 
  // places operator data in the appropiate variable
- function operatorData(element){ 
-      operator = element.id;
+ function operatorData(operatorElement){ 
+      operator = operatorElement.id;
    }
  
 
@@ -63,6 +80,7 @@
  numbers.forEach((number) =>
    number.addEventListener('click', () => {
       numericalData(number);
+      updateScreen();
    }));
 
  operators.forEach((operatorElement) =>
@@ -70,4 +88,8 @@
       operatorData(operatorElement);
    })
 );
+
+equals.addEventListener('click', ()=>{
+   operate(parseInt(firstNumber), parseInt(secondNumber),operator);
+});
 
