@@ -20,25 +20,33 @@
  let firstNumber = '';
  let secondNumber = '';
  let operator = '';
- result = '';
+ let result = '';
 
  //operate function
  function operate(firstNumber, secondNumber, operator){
    switch (operator){
       case 'division':
          result = division(firstNumber, secondNumber);
+         firstNumber = result;
+         secondNumber = '';
          break;
       
       case 'multiplication':
          result = multiply(firstNumber, secondNumber);
+         firstNumber = result;
+         secondNumber = '';
          break;
 
       case 'subtraction':
          result = subtract(firstNumber, secondNumber);
+         firstNumber = result;
+         secondNumber = '';
          break;
 
       case 'addition':
          result = add(firstNumber, secondNumber);
+         firstNumber = result;
+         secondNumber = '';
          break;      
    }
  }
@@ -69,6 +77,21 @@
  function operatorData(operatorElement){ 
       operator = operatorElement.id;
    }
+// resets the screen to 0
+   function reset(){
+      firstNumber = 0;
+      screen.textContent = firstNumber;
+      firstNumber = '';
+   }
+// performs operations without using the equals button
+   function secondOperation(){
+      if((operator !== '') && (firstNumber !== '') && (secondNumber !== '')){
+         operate(parseInt(firstNumber), parseInt(secondNumber), operator)
+      }
+   }
+
+
+
  
 
  // DOM manipulation
@@ -76,6 +99,7 @@
  let operators = document.querySelectorAll('.operator');
  let screen = document.getElementById('results');
  let equals = document.querySelector('#equal')
+ let clear = document.getElementById('ac');
 
  numbers.forEach((number) =>
    number.addEventListener('click', () => {
@@ -86,10 +110,16 @@
  operators.forEach((operatorElement) =>
    operatorElement.addEventListener('click', ()=>{
       operatorData(operatorElement);
+      secondOperation();
+      updateScreen();
    })
 );
 
 equals.addEventListener('click', ()=>{
    operate(parseInt(firstNumber), parseInt(secondNumber),operator);
+   updateScreen();
 });
+
+
+clear.addEventListener('click', reset);
 
