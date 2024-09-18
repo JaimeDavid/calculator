@@ -1,29 +1,30 @@
 // basic math functions.
- function add(x, y){
+function add(x, y){
     return x + y;
  }
 
- function subtract(x,y){
+function subtract(x,y){
     return x-y;
  }
 
- function multiply(x, y){
+function multiply(x, y){
     return x * y;
  }
 
- function division(x, y){
+function division(x, y){
     if (y == 0) return "Are you trying to end the world!!!!";
     return x / y;
  }
 
  //operation variables
- let firstNumber = '';
- let secondNumber = '';
- let operator = '';
- let result = '';
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+let result = '';
+let currentValue ='';
 
  //operate function
- function operate(firstNumber, secondNumber, operator){
+function operate(firstNumber, secondNumber, operator){
    switch (operator){
       case 'division':
          result = division(firstNumber, secondNumber);
@@ -50,41 +51,41 @@
          break;      
    }
  }
+// assigns number value to current value
+function screenValue(numberElement){ 
+   currentValue += numberElement.textContent;   
+}
 
- //updates screen
- function updateScreen(){
-   if (result !== '' && operator !== '' ){
-      screen.textContent = result.toString();
-   } else if (operator === ''){
-      screen.textContent = firstNumber;
-   }else {
-      screen.textContent = secondNumber;
-   }
-
+// upoates calculator screen
+function screenText(){
+   screen.textContent = currentValue;
  }
+
+
 //places numeric calculator data in the appropiate variable
- function numericalData(numericalElement){
+function numericalData(numericalElement){
    if ((operator === '')){
-      firstNumber += numericalElement.textContent;
-      
+      firstNumber = parseInt(currentValue);
+
    } else{
-      secondNumber += numericalElement.textContent;       
+      secondNumber = parseInt(currentValue);       
       
    }
  }
 
  // places operator data in the appropiate variable
- function operatorData(operatorElement){ 
+function operatorData(operatorElement){ 
       operator = operatorElement.id;
+      currentValue = '';
    }
 // resets the screen to 0
-   function reset(){
+function reset(){
       firstNumber = 0;
       screen.textContent = firstNumber;
       firstNumber = '';
    }
 // performs operations without using the equals button
-   function secondOperation(){
+function secondOperation(){
       if((operator !== '') && (firstNumber !== '') && (secondNumber !== '')){
          operate(parseInt(firstNumber), parseInt(secondNumber), operator)
       }
@@ -95,29 +96,29 @@
  
 
  // DOM manipulation
- let numbers = document.querySelectorAll('.number');
- let operators = document.querySelectorAll('.operator');
- let screen = document.getElementById('results');
- let equals = document.querySelector('#equal')
- let clear = document.getElementById('ac');
+let numbers = document.querySelectorAll('.number');
+let operators = document.querySelectorAll('.operator');
+let screen = document.getElementById('results');
+let equals = document.querySelector('#equal')
+let clear = document.getElementById('ac');
 
- numbers.forEach((number) =>
+numbers.forEach((number) =>
    number.addEventListener('click', () => {
+      screenValue(number);
       numericalData(number);
-      updateScreen();
+      screenText();
    }));
 
- operators.forEach((operatorElement) =>
+operators.forEach((operatorElement) =>
    operatorElement.addEventListener('click', ()=>{
       operatorData(operatorElement);
-      secondOperation();
-      updateScreen();
+      secondOperation();      
    })
 );
 
 equals.addEventListener('click', ()=>{
    operate(parseInt(firstNumber), parseInt(secondNumber),operator);
-   updateScreen();
+   screenText();
 });
 
 
