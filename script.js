@@ -25,7 +25,11 @@ function division(x, y){
     return x / y;
  }
 
- //operation variables
+// update value after operate function
+function updateValues(){
+   storedValue = result;
+   currentValue = ''
+}
 
 
 
@@ -34,18 +38,22 @@ function operate(storedValue, currentValue, operator){
    switch (operator){
       case 'division':
          result = division(storedValue, currentValue);
+         updateValues()
          break;
       
       case 'multiplication':
          result = multiply(storedValue, currentValue);
+         updateValues()
          break;
 
       case 'subtraction':
          result = subtract(storedValue, currentValue);
+         updateValues()
          break;
 
       case 'addition':
          result = add(storedValue, currentValue);
+         updateValues()
          break;      
    }
  }
@@ -54,12 +62,7 @@ function operate(storedValue, currentValue, operator){
 
 // assigns number value to current value
 function screenValue(numberElement){ 
-   if( result !== ''){
-      currentValue = '';
-      storedValue = result;
-      result = '';
-      currentValue += numberElement.textContent; 
-   } else if( currentValue === 0){
+   if( currentValue === 0){
       currentValue = '';
       currentValue += numberElement.textContent; 
 
@@ -81,10 +84,6 @@ function screenText(){
 
  // places operator data in the appropiate variable and resets variables depending on the case
 function operatorData(operatorElement){ 
-      if(result !== ''){
-        storedValue = currentValue;
-        currentValue 
-      }
       operator = operatorElement.id;
       storedValue = currentValue;
       currentValue = ''
@@ -94,6 +93,9 @@ function reset(){
       currentValue = 0;
       storedValue = '';
       screen.textContent = currentValue;
+      currentValue = '';
+      result = '';
+      operator = '';
    }
 
 
@@ -114,10 +116,15 @@ numbers.forEach((number) =>
    }));
 
 operators.forEach((operatorElement) =>
-   operatorElement.addEventListener('click', ()=>{      
-      operatorData(operatorElement);
-      operate(parseInt(storedValue), parseInt(currentValue),operator);
-    
+   operatorElement.addEventListener('click', ()=>{  
+      if (storedValue !== '' && operator !== '' && currentValue !== ''){
+         operate(parseInt(storedValue), parseInt(currentValue), operator);
+         screenText();
+         operatorData(operatorElement);
+      }else {
+         operatorData(operatorElement); 
+      }    
+   
    })
 );
 
