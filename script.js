@@ -21,7 +21,7 @@ function multiply(x, y){
  }
 
 function division(x, y){
-    if (y == 0) return "Are you trying to end the world!!!!";
+    if (y == 0) return "Just NO!!!";
     return x / y;
  }
 
@@ -106,14 +106,23 @@ function reset(){
       result = '';
       operator = '';
    }
-//this is a tester fucntion for functionality
-///////////
-function tester(){
-   testerCurrent.textContent = currentValue;
-   testerOperator.textContent = operator;
-   testerStored.textContent = storedValue;
-   testerResult.textContent = result;
 
+// changes the current value or result from positive to negative and viceversa 
+function plusMinus(){
+  if(currentValue === ''){   
+   result *=-1;
+  }else{
+   currentValue *=-1;
+  }
+}
+
+//divides screenvalue by 100.
+function percent(){
+   if (currentValue ===''){
+      result /=100;
+   }else{
+      currentValue /=100;
+   }
 }
 
 
@@ -125,19 +134,15 @@ let operators = document.querySelectorAll('.operator');
 let screen = document.getElementById('results');
 let equals = document.querySelector('#equal')
 let clear = document.getElementById('ac');
-//////////// tester dom variables
-////////////
-let testerCurrent = document.querySelector('#currentTester');
-let testerOperator = document.getElementById('operatorTester');
-let testerStored = document.getElementById('storedTester'); 
-let testerResult =  document.getElementById('resultTester');
+let signChange = document.querySelector('#plus-minus');
+let percentage = document.getElementById('percentage');
 
 numbers.forEach((number) =>
    number.addEventListener('click', () => {
       screenValue(number);
       screenText();
-      ////////////
-      tester();
+
+
    }));
 
 operators.forEach((operatorElement) =>
@@ -146,18 +151,22 @@ operators.forEach((operatorElement) =>
          operate(parseInt(storedValue), parseInt(currentValue), operator);
          screenText();
          operatorData(operatorElement);
-         ///////////
-         tester();
+
+
       }else {
          operatorData(operatorElement);
-         ////////////// 
-         tester();
+
+
       }    
    
    })
 );
 
 equals.addEventListener('click', ()=>{
+   if(currentValue === ''){
+      currentValue = 0;
+      screenText();
+   }
    operate(parseInt(storedValue), parseInt(currentValue),operator);
    screenText();
 });
@@ -165,5 +174,14 @@ equals.addEventListener('click', ()=>{
 
 clear.addEventListener('click', reset);
 
+signChange.addEventListener('click', () =>{
+   plusMinus();
+   screenText();
+});
+
+percentage.addEventListener('click', ()=>{
+   percent();
+   screenText();
+});
 
 
