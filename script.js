@@ -6,6 +6,7 @@ let result = ''
 
 
 
+// calculator methods
 
 // basic math functions.
 function add(x, y){
@@ -35,11 +36,12 @@ function updateValues(){
 
  //operate function
 function operate(storedValue, currentValue, operator){
-   if (currentValue === '') currentValu = 0;
+   if (currentValue === '') currentValue = 0;
    switch (operator){
       case 'division':
          result = division(storedValue, currentValue);
          updateValues();
+         storedValue = '';
          break;
       
       case 'multiplication':
@@ -124,11 +126,21 @@ function percent(){
       currentValue /=100;
    }
 }
+// adds a decimal point to the number
+function decimalPoint(){
+   if (!currentValue.includes('.') && currentValue != ''){
+      currentValue +='.';
+   }else{
+      currentValue +='0.';
+   }
+}
+
+
 
 
  
 
- // DOM manipulation
+ // DOM manipulation variables
 let numbers = document.querySelectorAll('.number');
 let operators = document.querySelectorAll('.operator');
 let screen = document.getElementById('results');
@@ -136,7 +148,9 @@ let equals = document.querySelector('#equal')
 let clear = document.getElementById('ac');
 let signChange = document.querySelector('#plus-minus');
 let percentage = document.getElementById('percentage');
+let decimal =  document.querySelector('#decimal');
 
+// DOM manipulation event listeners
 numbers.forEach((number) =>
    number.addEventListener('click', () => {
       screenValue(number);
@@ -181,6 +195,11 @@ signChange.addEventListener('click', () =>{
 
 percentage.addEventListener('click', ()=>{
    percent();
+   screenText();
+});
+
+decimal.addEventListener('click',()=>{
+   decimalPoint();
    screenText();
 });
 
