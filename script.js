@@ -130,6 +130,8 @@ function percent(){
 function decimalPoint(){
    if (!currentValue.includes('.') && currentValue != ''){
       currentValue +='.';
+   }else if( currentValue.includes('0.')){
+      currentValue = currentValue;
    }else{
       currentValue +='0.';
    }
