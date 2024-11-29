@@ -41,7 +41,7 @@ function operate(storedValue, currentValue, operator){
       case 'division':
          result = division(storedValue, currentValue);
          updateValues();
-         storedValue = '';
+         storedValue = '';        
          break;
       
       case 'multiplication':
@@ -74,15 +74,21 @@ function screenValue(numberElement){
    }
  
 }
+// limits screen data to less than length 10
+function screenLength(element){
+   return (element.length > 10) ? element.substring(0,10): element;
+}
 
 // updates calculator screen
 function screenText(){
    if (result !== ''){
-      screen.textContent = result;
+      screen.textContent = screenLength(String(result));
    }else {
-      screen.textContent = currentValue;
+      screen.textContent = screenLength(currentValue);
    }
  }
+
+
 
 
  // places operator data in the appropiate variable and resets variables depending on the case
@@ -204,5 +210,7 @@ decimal.addEventListener('click',()=>{
    decimalPoint();
    screenText();
 });
+
+
 
 
