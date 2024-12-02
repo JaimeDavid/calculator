@@ -3,6 +3,7 @@ let currentValue = '';
 let storedValue = '';
 let operator = '';
 let result = ''
+let errorMarker = false;
 
 
 
@@ -22,8 +23,8 @@ function multiply(x, y){
  }
 
 function division(x, y){
-    if (y == 0) return "Just NO!!!";
-    return x / y;
+   return  (y == 0) ? 'Just NO!!!': x / y;
+   
  }
 
 // update value after operate function
@@ -32,6 +33,12 @@ function updateValues(){
    currentValue = ''
 }
 
+//reset value when divided by zero error
+function errorData(){
+   currentValue = '';
+   storedValue = '';
+   result = '';
+}
 
 
  //operate function
@@ -40,8 +47,13 @@ function operate(storedValue, currentValue, operator){
    switch (operator){
       case 'division':
          result = division(storedValue, currentValue);
-         updateValues();
-         storedValue = '';        
+         if (result === 'Just NO!!!'){
+            errorData();
+            errorMarker = true;
+         }else {
+            updateValues();
+         }
+      
          break;
       
       case 'multiplication':
@@ -81,7 +93,10 @@ function screenLength(element){
 
 // updates calculator screen
 function screenText(){
-   if (result !== ''){
+   if (errorMarker == true){
+      screen.textContent = 'Just NO!!!'
+      errorMarker = false;
+   }else if (result !== ''){
       screen.textContent = screenLength(String(result));
    }else {
       screen.textContent = screenLength(currentValue);
