@@ -31,6 +31,7 @@ function division(x, y){
 function updateValues(){
    storedValue = result;
    currentValue = ''
+   result = String(result);
 }
 
 //reset value when divided by zero error
@@ -158,6 +159,15 @@ function decimalPoint(){
    }
 }
 
+//deletes one element of the number on screen
+function backSpace(){
+   if(result !== '' && result.length >1){
+      result = String(result).substring(0,(String(result).length -1));
+   }else if(currentValue.length >1){
+      currentValue = currentValue.substring(0, (currentValue.length -1))
+   }
+}
+
 
 
 
@@ -172,6 +182,7 @@ let clear = document.getElementById('ac');
 let signChange = document.querySelector('#plus-minus');
 let percentage = document.getElementById('percentage');
 let decimal =  document.querySelector('#decimal');
+let backspace = document.getElementById('backspace');
 
 // DOM manipulation event listeners
 numbers.forEach((number) =>
@@ -225,6 +236,12 @@ decimal.addEventListener('click',()=>{
    decimalPoint();
    screenText();
 });
+
+backspace.addEventListener('click', ()=>{
+   backSpace();
+   screenText();
+})
+
 
 
 
