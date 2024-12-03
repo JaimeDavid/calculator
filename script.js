@@ -163,6 +163,7 @@ function decimalPoint(){
 function backSpace(){
    if(result !== '' && result.length >1){
       result = String(result).substring(0,(String(result).length -1));
+      storedValue = result;
    }else if(currentValue.length >1){
       currentValue = currentValue.substring(0, (currentValue.length -1))
    }
