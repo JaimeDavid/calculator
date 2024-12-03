@@ -185,7 +185,7 @@ numbers.forEach((number) =>
 operators.forEach((operatorElement) =>
    operatorElement.addEventListener('click', ()=>{  
       if (storedValue !== '' && operator !== '' && currentValue !== ''){
-         operate(parseInt(storedValue), parseInt(currentValue), operator);
+         operate(Number(storedValue), Number(currentValue), operator);
          screenText();
          operatorData(operatorElement);
 
@@ -204,7 +204,7 @@ equals.addEventListener('click', ()=>{
       currentValue = 0;
       screenText();
    }
-   operate(parseInt(storedValue), parseInt(currentValue),operator);
+   operate(Number(storedValue), Number(currentValue),operator);
    screenText();
 });
 
