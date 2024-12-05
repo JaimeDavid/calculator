@@ -169,6 +169,24 @@ function backSpace(){
    }
 }
 
+//changes the event key to appropiate ID for element function
+function operations(element){
+   switch(element){
+      case('-'):
+         return 'subtraction';
+
+      case('+'):
+         return 'addition';
+      case('*'):
+         return 'multiplication';
+      case('/'):
+         return 'division'
+      case('='):
+         return 'equals';
+   } 
+}
+
+
 
 
 
@@ -242,6 +260,40 @@ backspace.addEventListener('click', ()=>{
    backSpace();
    screenText();
 })
+
+//keyboard support
+
+//TODO create new operatorData function for keyboardsupport
+window.addEventListener('keydown',
+   (event)=>{
+      let numbers = '1234567890';
+      let operators = '+-*/'
+      let equal ='='
+      if (numbers.includes(event.key)){
+         currentValue += event.key;
+         screenText();
+      }else if(operators.includes(event.key)){
+         if(storedValue !== '' && operator !== '' && currentValue !== ''){
+            operate(Number(storedValue), Number(currentValue), operations(event.key));
+            screenText();
+            operator = operations(event.key);
+         }else{
+         operator = operations(event.key);
+         }
+
+      }else if(equal.includes(event.key)){
+         if(currentValue === ''){
+            currentValue = 0;
+            screenText();
+         }
+         operate(Number(storedValue), Number(currentValue),operator);
+         screenText();
+      }else if (event.key == 'Backspace'){
+         backSpace();
+         screenText();
+      }
+   },true
+);
 
 
 
