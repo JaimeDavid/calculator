@@ -78,7 +78,7 @@ function operate(storedValue, currentValue, operator){
 
 // assigns number value to current value
 function screenValue(numberElement){ 
-   if( currentValue === 0){
+   if( currentValue[0] === '0'){
       currentValue = '';
       currentValue += numberElement.textContent; 
 
@@ -185,7 +185,19 @@ function operations(element){
          return 'equals';
    } 
 }
+function keyboardOperatorData(element){
+   if (result !== ''){
+      operator = element;
+      result = '';
+   }else if (currentValue === ''){
+      operator = element;
+   }else {
+      operator = element;
+      storedValue = currentValue;
+      currentValue = '';
+   }
 
+}
 
 
 
@@ -276,9 +288,9 @@ window.addEventListener('keydown',
          if(storedValue !== '' && operator !== '' && currentValue !== ''){
             operate(Number(storedValue), Number(currentValue), operations(event.key));
             screenText();
-            operator = operations(event.key);
+            keyboardOperatorData(operations(event.key));
          }else{
-         operator = operations(event.key);
+            keyboardOperatorData(operations(event.key));
          }
 
       }else if(equal.includes(event.key)){
@@ -290,6 +302,9 @@ window.addEventListener('keydown',
          screenText();
       }else if (event.key == 'Backspace'){
          backSpace();
+         screenText();
+      }else if (event.key == '.'){
+         decimalPoint();
          screenText();
       }
    },true
